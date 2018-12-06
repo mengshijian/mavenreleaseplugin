@@ -19,8 +19,8 @@ package org.apache.maven.shared.release.phase;
  * under the License.
  */
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.File;
+import java.util.List;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.release.ReleaseExecutionException;
 import org.apache.maven.shared.release.ReleaseResult;
@@ -28,9 +28,6 @@ import org.apache.maven.shared.release.config.ReleaseDescriptor;
 import org.apache.maven.shared.release.env.ReleaseEnvironment;
 import org.apache.maven.shared.release.util.PomFinder;
 import org.codehaus.plexus.util.StringUtils;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Run the integration tests for the project to verify that it builds before committing.
@@ -41,18 +38,6 @@ import java.util.List;
 public class RunPerformGoalsPhase
         extends AbstractRunGoalsPhase
 {
-    private static PrintWriter pw = null;
-    static {
-        try  {
-            PrintWriter printWriter = pw = new PrintWriter(new FileWriter(new File("E:\\runPerform.txt")));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public static void writeLog(String con){
-        pw.append(con+"\n");
-        pw.flush();
-    }
     public ReleaseResult execute( ReleaseDescriptor releaseDescriptor, ReleaseEnvironment releaseEnvironment,
             List<MavenProject> reactorProjects )
             throws ReleaseExecutionException
@@ -145,7 +130,8 @@ public class RunPerformGoalsPhase
                 workDirectory = matchingPom.getParentFile();
             }
         }
-        writeLog("-----perform"+simulate+","+workDir+","+additionalArguments);
+        getLogger().info("-----perform"+simulate+","+workDir+","+additionalArguments);
+        //writeLog("-----perform"+simulate+","+workDir+","+additionalArguments);
         return execute( releaseDescriptor, releaseEnvironment, workDirectory, additionalArguments );
     }
 

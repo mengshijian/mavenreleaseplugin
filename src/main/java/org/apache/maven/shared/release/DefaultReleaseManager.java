@@ -389,14 +389,6 @@ public class DefaultReleaseManager
     {
         perform( performRequest, new ReleaseResult() );
     }
-    /*private static PrintWriter pw = null;
-    static {
-        try  {
-            PrintWriter printWriter = pw = new PrintWriter(new FileWriter(new File("E:\\dd.txt")));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
     private void perform( ReleaseDescriptor releaseDescriptor, ReleaseEnvironment releaseEnvironment,
             List<MavenProject> reactorProjects, ReleaseManagerListener listener, ReleaseResult result,
             boolean clean )

@@ -410,14 +410,6 @@ public class InvokerMavenExecutor
                 throw new MavenExecutorException( "Could not create temporary file for release settings.xml", e );
             }
         }
-        try (FileOutputStream fout = new FileOutputStream(new File("D:\\settings.xml")); FileInputStream fin = new FileInputStream(settingsFile);) {
-            byte[] byt = new byte[128];
-            while(fin.read(byt)!=-1){
-                fout.write(byt,0,byt.length);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         try
         {
             File localRepoDir = releaseEnvironment.getLocalRepositoryDirectory();
@@ -432,9 +424,11 @@ public class InvokerMavenExecutor
 
             try
             {
-                RunPerformGoalsPhase.writeLog("InvokerMaven:"+invoker.getClass().getName());
+                getLogger().info("InvokerMaven:"+invoker.getClass().getName());
+                //RunPerformGoalsPhase.writeLog("InvokerMaven:"+invoker.getClass().getName());
                 InvocationResult invocationResult = invoker.execute( req );
-                RunPerformGoalsPhase.writeLog("InvokerMaven:>>"+invocationResult.getClass().getName());
+                getLogger().info("InvokerMaven:>>"+invocationResult.getClass().getName());
+                //RunPerformGoalsPhase.writeLog("InvokerMaven:>>"+invocationResult.getClass().getName());
                 if ( invocationResult.getExecutionException() != null )
                 {
                     throw new MavenExecutorException( "Error executing Maven.",

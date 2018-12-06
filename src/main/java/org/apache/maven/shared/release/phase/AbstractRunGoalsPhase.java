@@ -70,7 +70,8 @@ public abstract class AbstractRunGoalsPhase
             if ( !StringUtils.isEmpty( goals ) )
             {
                 logInfo( result, "Executing goals '" + goals + "'..." );
-                RunPerformGoalsPhase.writeLog("AbstractRun:"+goals);
+                logInfo( result, "AbstractRun:"+goals );
+                //RunPerformGoalsPhase.writeLog("AbstractRun:"+goals);
                 MavenExecutor mavenExecutor = mavenExecutors.get( releaseEnvironment.getMavenExecutorId() );
 
                 if ( mavenExecutor == null )
@@ -82,7 +83,8 @@ public abstract class AbstractRunGoalsPhase
                 File wd =
                         determineWorkingDirectory( workingDirectory,
                                 releaseDescriptor.getScmRelativePathProjectDirectory() );
-                RunPerformGoalsPhase.writeLog("AbstractRun:"+mavenExecutor.getClass().getName());
+                logInfo(result,"AbstractRun:"+mavenExecutor.getClass().getName());
+                //RunPerformGoalsPhase.writeLog("AbstractRun:"+mavenExecutor.getClass().getName());
                 org.apache.maven.shared.release.exec.InvokerMavenExecutor ime = null;
                 mavenExecutor.executeGoals( wd, goals, releaseEnvironment, releaseDescriptor.isInteractive(),
                         additionalArguments, releaseDescriptor.getPomFileName(), result );

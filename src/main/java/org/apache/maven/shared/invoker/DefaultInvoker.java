@@ -49,18 +49,6 @@ public class DefaultInvoker implements Invoker {
     private InvocationOutputHandler outputHandler;
     private InputStream inputStream;
     private InvocationOutputHandler errorHandler;
-    private static PrintWriter pw = null;
-    static {
-        try  {
-            PrintWriter printWriter = pw = new PrintWriter(new FileWriter(new File("E:\\invoker.txt")));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public static void writeLog(String con){
-        pw.append(con+"\n");
-        pw.flush();
-    }
     public DefaultInvoker() {
         this.logger = DEFAULT_LOGGER;
         this.outputHandler = DEFAULT_OUTPUT_HANDLER;
@@ -121,7 +109,8 @@ public class DefaultInvoker implements Invoker {
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("Executing: " + cli);
         }
-        writeLog("invoker:"+cli+",isInteractive:"+request.isInteractive());
+        getLogger().info("invoker:"+cli+",isInteractive:"+request.isInteractive());
+        //writeLog("invoker:"+cli+",isInteractive:"+request.isInteractive());
         if (request.isInteractive()) {
             if (inputStream == null) {
                 this.getLogger().warn("Maven will be executed in interactive mode, but no input stream has been configured for this MavenInvoker instance.");
@@ -129,7 +118,8 @@ public class DefaultInvoker implements Invoker {
             } else {
                 result = CommandLineUtils.executeCommandLine(cli, inputStream, outputHandler, errorHandler);
             }
-            writeLog("invoker:"+cli+",result:"+result);
+            getLogger().info("invoker:"+cli+",result:"+result);
+            //writeLog("invoker:"+cli+",result:"+result);
         } else {
             if (inputStream != null) {
                 this.getLogger().info("Executing in batch mode. The configured input stream will be ignored.");
